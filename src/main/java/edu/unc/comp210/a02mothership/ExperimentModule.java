@@ -1,10 +1,10 @@
 package edu.unc.comp210.a02mothership;
 
 public class ExperimentModule extends AModule {
-    String experimentName;
-    double[] parameters;
-    double result;
-    boolean hasRun;
+    private String experimentName;
+    private double[] parameters;
+    private double result;
+    private boolean hasRun;
 
     public ExperimentModule(String experimentName, double[] parameters){
         super("Experiment Module");
