@@ -1,14 +1,14 @@
 # A2 Worksheet: Designing the Mothership
 
-**Name:**
-**Onyen:**
+**Name:** Ranjani Sathyan
+**Onyen:** 730746249
 
 Three questions, 15 points, about fifteen minutes. Do this before you write any
 code; everything you need is in `README.md` and restated below. You should not
 need to open a single `.java` file to answer these. Write your answers directly
 under each prompt.
 
----
+--- 
 
 ## Question 1: Vocabulary of the hierarchy (5 points)
 
@@ -16,12 +16,12 @@ under each prompt.
 how you know. (Remember: IS-A means one class extends the other; HAS-A means one
 class stores the other in a field.)
 
-| Pair | IS-A or HAS-A? | How you know |
-|---|---|---|
-| `FuelGenerator` → `APowerGenerator` |  |  |
-| `Mothership` → `ThrusterModule` |  |  |
-| `SolarGenerator` → `AModule` |  |  |
-| `ExperimentModule` → `double[] parameters` |  |  |
+| Pair | IS-A or HAS-A? | How you know                                                                                                                                                        |
+|---|----------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `FuelGenerator` → `APowerGenerator` | `HAS-A`        | `Fuel Generator extends APowerGenerator`                                                                                                                            |
+| `Mothership` → `ThrusterModule` | `HAS-A`        | `Thruster extends Mothership and Mothership stores Thruster in a field`                                                                                             |
+| `SolarGenerator` → `AModule` | `IS-A`         | `Solar Generator has an is-a relationship with APowerGenerator which has an is-a relationship with AModule so SolarGenerator has an is-a relationship with AModule` |
+| `ExperimentModule` → `double[] parameters` | `HAS-A`         | `ExperimentModule has a field double[] parameters which constitutes an is-a relationship?`                                                                           |
 
 **1b.** Both `AModule` and `APowerGenerator` are declared `abstract`, but only
 `APowerGenerator` declares an **abstract method** (`generatePower()`). These are
@@ -30,13 +30,13 @@ two different design decisions doing two different jobs.
 - Marking the *class* abstract stops a programmer from doing what?
 
 ```
-
+Marking a class abstract stops someone from creating an instance of that abstract class. 
 ```
 
 - Marking the *method* abstract forces a programmer to do what?
 
 ```
-
+If a method is abstract then any subclass of that superclass is required to implement that abstract method.
 ```
 
 **1c.** `ThrusterModule`, `SolarGenerator`, and `ExperimentModule` each override
@@ -46,6 +46,8 @@ own line, and forgets the `super` call. Will the compiler complain? What is
 actually lost, and how would the student find out?
 
 ```
+The compiler will not complain because overriding a method and calling the parent method are indepdent events so it does not cause an error to not call the parent function. However, what is lost is all of the common information that super.statusReport() provides. This is how the student would find out because the <module name> is initializing... line would not print
+
 
 ```
 
@@ -72,33 +74,34 @@ mothership. The mission then runs four rounds; each round is one
 value that was just returned. Fill in the table.
 
 | Round | Power returned | Generator fuel after | Thruster fuel after | Thrust succeeded? | `lastFired` |
-|---|---|---|---|---|---|
-| start | — | 22 | 100 | — | false |
-| 1 |  |  |  |  |  |
-| 2 |  |  |  |  |  |
-| 3 |  |  |  |  |  |
-| 4 |  |  |  |  |  |
+|---|----------------|----------------------|---------------------|-------------------|-------------|
+| start | --             | 22                   | 100                 | —                 | false       |
+| 1 | 10             | 12                   | 95                  | yes               | true        |
+| 2 | 10             | 2                    | 90                  | yes               | tue         |
+| 3 | 2              | 0                    | 90                  | no                | false       |
+| 4 | 0              | 0                    | 90                  | no                | false       |
 
 **2b.** Now change **one line in `Main`** so the ship launches with a
 `SolarGenerator` instead. Nothing inside `Mothership` changes. Redo rounds 3 and
 4 only.
 
 | Round | Power returned | Thruster fuel after | Thrust succeeded? |
-|---|---|---|---|
-| 3 |  |  |  |
-| 4 |  |  |  |
+|---|----------------|---------------------|-------------------|
+| 3 | 10             | 85                  | yes               |
+| 4 | 10             | 80                  | yes               |
 
 Which line in `Main` changed, and what is it about the **declared type** of the
 mothership's generator field that made that one line enough?
 
 ```
-
+The line that changed in main is the line that creates an APowerGenerator variable. Instead of creating a new FuelGenerator() it was switched to new SolarGenerator(). The declared type of the mothership's generator field is APowerGenerator, both FuelGenerator and SolarGenerator extend APowerGenerator meaning that the field can be either one of the generator types and be fine.
 ```
 
 **2c.** On the solar ship, the thruster will eventually stop firing anyway.
 Which round is the first failed thrust, and why? Show the arithmetic.
 
 ```
+Even though the power retuned will always be 10 satisfying one criteria for firing, the thruster fuel goes down by 5 after every fire. So the round that will fail can be represented by 100 - 5x = 0 which after solving makes x = 20 so on the 21st round it will fail. 
 
 ```
 
@@ -114,7 +117,7 @@ something the ship could do with the `AModule` version that it could not do with
 theirs.
 
 ```
-
+For this student their mothership is now restricted and can only accept a ShieldModule as the extra module, whereas with AModule as the fourth parameter Mothership can now accpet any subclass of AModule. 
 ```
 
 **3b.** You ask an AI assistant to help wire up the mothership and it proposes
@@ -132,6 +135,7 @@ third generator (say, `ReactorGenerator`) is added later, and contrast that with
 what the spec's design requires.
 
 ```
+The student's design requires Mothership to be depdent on all of the specific generators classes. If an extra generator ReactorGenerator is added then the code would have to be changed and another field would need to be added to Mothership and an extra if statement would need to be added to requestPower. In the original design because Mothership only stores one APowerGenerator field which extends to all the Generator classes (Solar and Fuel) any new generators can be passed in without needed to change Mothership.
 
 ```
 
