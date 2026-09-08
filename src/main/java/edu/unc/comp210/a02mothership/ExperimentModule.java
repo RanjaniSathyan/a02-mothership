@@ -32,9 +32,9 @@ public class ExperimentModule extends AModule {
     @Override
     public void statusReport(String moduleStatus, boolean isSuccessful){
         if (hasRun){
-            System.out.println("ExperimentModule: " + this.experimentName + " completed.");
+            System.out.println("Experiment Module: " + this.experimentName + " completed.");
         } else {
-            System.out.println("ExperimentModule: " + this.experimentName + " pending.");
+            System.out.println("Experiment Module: " + this.experimentName + " pending.");
         }
         super.statusReport(moduleStatus, isSuccessful);
     }

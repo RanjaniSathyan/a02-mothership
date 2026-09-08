@@ -1,7 +1,7 @@
 package edu.unc.comp210.a02mothership;
 
 public class FuelGenerator extends APowerGenerator{
-    int fuel;
+    private int fuel;
     public FuelGenerator(int fuel){
         super("FuelGenerator");
         this.fuel = fuel;
